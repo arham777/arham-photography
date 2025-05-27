@@ -27,7 +27,7 @@ const Header = () => {
 
   return (
     <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-      isScrolled ? 'bg-neutral-950/90 backdrop-blur-lg' : 'bg-transparent'
+      isScrolled ? 'bg-zinc-900/90 backdrop-blur-lg' : 'bg-transparent'
     }`}>
       <nav className="px-6 py-6">
         {/* Desktop Menu */}
@@ -38,7 +38,7 @@ const Header = () => {
                 to={item.path} 
                 className="relative group"
               >
-                <span className="text-sm text-neutral-300 hover:text-white transition-colors duration-300">
+                <span className="text-sm font-medium text-zinc-300 hover:text-white transition-colors duration-300">
                   {item.label}
                 </span>
                 {location.pathname === item.path && (
@@ -56,7 +56,7 @@ const Header = () => {
         <div className="md:hidden flex justify-end">
           <button
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className="text-neutral-300 p-2"
+            className="text-zinc-300 p-2"
           >
             <div className="w-6 h-5 relative flex flex-col justify-between">
               <span className={`w-full h-px bg-current transform transition-transform duration-300 ${isMobileMenuOpen ? 'rotate-45 translate-y-2' : ''}`} />
@@ -77,7 +77,7 @@ const Header = () => {
               className="absolute top-full left-0 right-0 mt-2 px-4"
             >
               <motion.div 
-                className="bg-neutral-900/95 backdrop-blur-lg rounded-2xl overflow-hidden"
+                className="bg-zinc-900/95 backdrop-blur-lg rounded-2xl overflow-hidden"
                 initial={{ scale: 0.95 }}
                 animate={{ scale: 1 }}
                 exit={{ scale: 0.95 }}
@@ -88,7 +88,7 @@ const Header = () => {
                       <Link
                         to={item.path}
                         onClick={() => setIsMobileMenuOpen(false)}
-                        className={`block px-6 py-3 text-sm text-neutral-300 hover:text-white transition-colors ${
+                        className={`block px-6 py-3 text-sm font-medium text-zinc-300 hover:text-white transition-colors ${
                           location.pathname === item.path ? 'text-white bg-white/5' : ''
                         }`}
                       >
