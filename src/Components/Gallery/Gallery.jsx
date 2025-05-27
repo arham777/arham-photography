@@ -29,3 +29,5 @@ const Gallery = ({ images }) => {
     </div>
   )
 }
+
+export default Gallery
