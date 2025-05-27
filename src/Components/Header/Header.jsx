@@ -53,18 +53,38 @@ const Header = () => {
         </ul>
 
         {/* Mobile Menu Button */}
-        <div className="md:hidden flex justify-end">
-          <button
-            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className="text-zinc-300 p-2"
-          >
-            <div className="w-6 h-5 relative flex flex-col justify-between">
-              <span className={`w-full h-px bg-current transform transition-transform duration-300 ${isMobileMenuOpen ? 'rotate-45 translate-y-2' : ''}`} />
-              <span className={`w-full h-px bg-current transition-opacity duration-300 ${isMobileMenuOpen ? 'opacity-0' : ''}`} />
-              <span className={`w-full h-px bg-current transform transition-transform duration-300 ${isMobileMenuOpen ? '-rotate-45 -translate-y-2' : ''}`} />
-            </div>
-          </button>
-        </div>
+        <motion.button
+          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+          className="md:hidden flex flex-col justify-center items-end gap-1.5 p-2 group"
+          whileTap={{ scale: 0.95 }}
+        >
+          <motion.span
+            animate={{
+              rotate: isMobileMenuOpen ? 45 : 0,
+              y: isMobileMenuOpen ? 8 : 0,
+              width: isMobileMenuOpen ? 24 : 24
+            }}
+            transition={{ duration: 0.3 }}
+            className="h-[2px] bg-white origin-center transform transition-all duration-300"
+          />
+          <motion.span
+            animate={{
+              opacity: isMobileMenuOpen ? 0 : 1,
+              width: isMobileMenuOpen ? 0 : 16
+            }}
+            transition={{ duration: 0.3 }}
+            className="h-[2px] bg-white group-hover:w-24 transition-all duration-300"
+          />
+          <motion.span
+            animate={{
+              rotate: isMobileMenuOpen ? -45 : 0,
+              y: isMobileMenuOpen ? -8 : 0,
+              width: isMobileMenuOpen ? 24 : 20
+            }}
+            transition={{ duration: 0.3 }}
+            className="h-[2px] bg-white origin-center transform transition-all duration-300"
+          />
+        </motion.button>
 
         {/* Mobile Menu */}
         <AnimatePresence>
@@ -77,7 +97,7 @@ const Header = () => {
               className="absolute top-full left-0 right-0 mt-2 px-4"
             >
               <motion.div 
-                className="bg-zinc-900/95 backdrop-blur-lg rounded-2xl overflow-hidden"
+                className="bg-zinc-900/95 backdrop-blur-lg rounded-2xl overflow-hidden border border-zinc-800"
                 initial={{ scale: 0.95 }}
                 animate={{ scale: 1 }}
                 exit={{ scale: 0.95 }}
