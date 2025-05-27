@@ -6,67 +6,63 @@ const HomePage = () => {
   const collectionsRef = useRef(null)
   
   const scrollToCollections = () => {
-    collectionsRef.current?.scrollIntoView({ 
-      behavior: 'smooth',
-      block: 'start'
-    })
-  }
-
-  const fadeIn = {
-    initial: { opacity: 0, y: 20 },
-    animate: { opacity: 1, y: 0 },
-    transition: { duration: 0.6 }
+    collectionsRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })
   }
 
   return (
     <PageTransition>
       {/* Hero Section */}
-      <section className="relative h-[100vh] -mt-24 pt-24">
+      <section className="relative h-screen -mt-24">
         <div className="absolute inset-0">
-          <img 
-            src="https://images.unsplash.com/photo-1452587925148-ce544e77e70d?q=80&w=2070"
+          <motion.img 
+            initial={{ scale: 1.1, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            transition={{ duration: 1.5 }}
+            src="https://images.pexels.com/photos/2486168/pexels-photo-2486168.jpeg?auto=compress&cs=tinysrgb&w=1920"
             alt="Professional photographer"
             className="w-full h-full object-cover"
           />
-          <div className="absolute inset-0 bg-gradient-to-r from-black/70 to-black/50" />
+          <div className="absolute inset-0 bg-neutral-950/60" />
         </div>
         
-        <div className="relative h-full flex items-center justify-center text-center px-4">
+        <div className="relative h-full flex items-center justify-center px-4">
           <motion.div 
-            className="max-w-3xl"
-            {...fadeIn}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.5 }}
+            className="max-w-2xl text-center"
           >
-            <h1 className="text-3xl sm:text-5xl md:text-7xl font-bold text-white mb-4 sm:mb-6">
-              Capturing Life's Beautiful Moments
+            <h1 className="text-4xl md:text-6xl font-light tracking-tight text-white mb-6">
+              Capturing Moments in Their Purest Form
             </h1>
-            <p className="text-lg sm:text-xl text-gray-200 mb-6 sm:mb-8">
-              Professional photography that tells your story
+            <p className="text-lg text-neutral-200 mb-8 font-light">
+              Professional photography with a minimalist approach
             </p>
             <motion.button
               onClick={scrollToCollections}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="bg-white text-gray-900 px-6 sm:px-8 py-2 sm:py-3 rounded-md font-medium hover:bg-gray-100 transition-colors"
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+              className="px-8 py-3 bg-white text-neutral-900 rounded-full text-sm font-medium hover:bg-neutral-100 transition-colors"
             >
-              View Gallery
+              View Work
             </motion.button>
           </motion.div>
         </div>
       </section>
 
       {/* Featured Categories */}
-      <section ref={collectionsRef} className="py-20 bg-gray-900">
-        <div className="px-4">
+      <section ref={collectionsRef} className="py-32 bg-neutral-950">
+        <div className="px-4 max-w-7xl mx-auto">
           <motion.h2 
-            className="text-3xl font-bold text-white mb-12 text-center"
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
+            className="text-2xl font-light text-white mb-16 text-center"
           >
             Featured Collections
           </motion.h2>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 md:gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {categories.map((category, index) => (
               <motion.div
                 key={category.title}
@@ -74,17 +70,19 @@ const HomePage = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.2 }}
-                className="group relative overflow-hidden rounded-lg aspect-[3/4]"
+                className="group relative aspect-[4/5] overflow-hidden"
               >
                 <img 
                   src={category.image} 
                   alt={category.title}
-                  className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                  className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent">
-                  <div className="absolute bottom-0 left-0 right-0 p-6">
-                    <h3 className="text-xl font-bold text-white mb-2">{category.title}</h3>
-                    <p className="text-gray-300 text-sm">{category.description}</p>
+                <div className="absolute inset-0 bg-gradient-to-t from-neutral-950/80 to-transparent">
+                  <div className="absolute bottom-0 left-0 right-0 p-8">
+                    <h3 className="text-xl font-light text-white mb-2">{category.title}</h3>
+                    <p className="text-neutral-300 text-sm font-light opacity-0 transform translate-y-4 transition-all duration-300 group-hover:opacity-100 group-hover:translate-y-0">
+                      {category.description}
+                    </p>
                   </div>
                 </div>
               </motion.div>
@@ -94,28 +92,18 @@ const HomePage = () => {
       </section>
 
       {/* About Section */}
-      <section className="py-20 bg-gray-800">
-        <div className="px-4">
-          <div className="max-w-3xl mx-auto text-center">
-            <motion.h2 
-              className="text-3xl font-bold text-white mb-6"
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              viewport={{ once: true }}
-            >
-              About Me
-            </motion.h2>
-            <motion.p 
-              className="text-gray-300 leading-relaxed"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-            >
-              With over a decade of experience in photography, I specialize in capturing 
-              the essence of special moments. From intimate weddings to stunning landscapes, 
-              my passion is creating timeless images that tell your unique story.
-            </motion.p>
-          </div>
+      <section className="py-32 bg-neutral-900">
+        <div className="px-4 max-w-3xl mx-auto text-center">
+          <motion.p 
+            className="text-lg font-light text-neutral-300 leading-relaxed"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+          >
+            With a decade behind the lens, I've developed a minimalist approach to photography
+            that focuses on the essential elements of each moment. My work aims to tell stories
+            through simplicity and authenticity.
+          </motion.p>
         </div>
       </section>
     </PageTransition>
@@ -125,23 +113,23 @@ const HomePage = () => {
 const categories = [
   {
     title: "Weddings",
-    description: "Timeless moments of love and celebration",
-    image: "https://images.unsplash.com/photo-1606800052052-a08af7148866?q=80&w=2070",
+    description: "Elegant moments, naturally captured",
+    image: "https://images.pexels.com/photos/1244627/pexels-photo-1244627.jpeg?auto=compress&cs=tinysrgb&w=1920",
   },
   {
     title: "Portraits",
-    description: "Capturing personality and character",
-    image: "https://images.unsplash.com/photo-1494959764136-6be9eb3c261e?q=80&w=2070",
+    description: "Authentic expressions, minimal settings",
+    image: "https://images.pexels.com/photos/2613260/pexels-photo-2613260.jpeg?auto=compress&cs=tinysrgb&w=1920",
   },
   {
     title: "Nature",
-    description: "The beauty of the natural world",
-    image: "https://images.unsplash.com/photo-1472214103451-9374bd1c798e?q=80&w=2070",
+    description: "The world in its purest form",
+    image: "https://images.pexels.com/photos/2662116/pexels-photo-2662116.jpeg?auto=compress&cs=tinysrgb&w=1920",
   },
   {
     title: "Products",
-    description: "Professional product photography",
-    image: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?q=80&w=2070",
+    description: "Simple, elegant product photography",
+    image: "https://images.pexels.com/photos/1667088/pexels-photo-1667088.jpeg?auto=compress&cs=tinysrgb&w=1920",
   }
 ]
 

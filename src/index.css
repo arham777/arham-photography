@@ -2,6 +2,25 @@
 @tailwind components;
 @tailwind utilities;
 
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
 body {
-  @apply bg-slate-900 text-white;
+  @apply bg-neutral-950 text-neutral-200 font-['Inter'];
+}
+
+.image-hover {
+  @apply transition-all duration-700 ease-in-out;
+}
+
+.image-hover:hover {
+  transform: scale(1.03);
+  filter: brightness(1.1);
+}
+
+.fade-up {
+  @apply opacity-0 translate-y-4 transition-all duration-700 ease-out;
+}
+
+.fade-up.in-view {
+  @apply opacity-100 translate-y-0;
 }
