@@ -33,7 +33,7 @@ const HomePage = () => {
             className="max-w-4xl text-center space-y-12"
           >
             <div className="space-y-6">
-              <h1 className="text-6xl md:text-6xl font-bold tracking-tight text-white leading-tight">
+              <h1 className="text-6xl md:text-8xl font-bold tracking-tight text-white leading-tight">
                 Capturing Moments in Their Purest Form
               </h1>
               <p className="text-2xl text-neutral-200 font-light">
