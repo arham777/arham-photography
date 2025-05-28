@@ -11,6 +11,86 @@ const ContactPage = () => {
   const messageRef = useRef()
   const formRef = useRef()
   const [showSuccess, setShowSuccess] = useState(false)
+  const [isAiLoading, setIsAiLoading] = useState(false)
+
+  const handleAiEnhanceMessage = async () => {
+    const currentUserMessage = messageRef.current.value
+    if (!currentUserMessage.trim()) {
+      return
+    }
+
+    setIsAiLoading(true)
+    let aiMessage = null; // Initialize aiMessage
+    try {
+      // IMPORTANT SECURITY WARNING:
+      // The API key is exposed in the client-side code here.
+      // This is NOT recommended for production applications.
+      // Use a backend or serverless function to protect your API key.
+      const apiKey = import.meta.env.VITE_GEMINI_API_KEY; // For Vite
+      // Or for Create React App: const apiKey = process.env.REACT_APP_GEMINI_API_KEY;
+
+      if (!apiKey) {
+        throw new Error("Gemini API key is not configured. Please check your .env file.");
+      }
+
+      // --- Actual Gemini API Call --- 
+      const geminiApiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`; 
+
+      // Refined prompt to get a direct rewritten message
+      const prompt = `Transform the following user's raw text into a formal, and professional message suitable for a photography service inquiry. Output ONLY the rewritten message and the message should contain all what user has written, without any extra explanation, options, or introductory phrases. Dont add greetings and subjects. Raw user text: "${currentUserMessage}"`;
+
+      const requestBody = {
+        contents: [{
+          parts: [{
+            text: prompt
+          }]
+        }]
+        // Add generationConfig, safetySettings if needed, as per Gemini API docs
+        // For example, to encourage shorter responses, you might add:
+        // generationConfig: {
+        //   maxOutputTokens: 150 // Adjust as needed
+        // }
+      };
+
+      const response = await fetch(geminiApiUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(requestBody),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        console.error('Gemini API Error Data:', errorData);
+        let detailedError = errorData.error?.message || 'Gemini API request failed.';
+        if (errorData.error?.details) {
+          detailedError += ` Details: ${JSON.stringify(errorData.error.details)}`;
+        }
+        throw new Error(detailedError);
+      }
+
+      const data = await response.json();
+      
+      if (data.candidates && data.candidates[0] && data.candidates[0].content && data.candidates[0].content.parts && data.candidates[0].content.parts[0]) {
+        aiMessage = data.candidates[0].content.parts[0].text;
+      } else {
+        console.error('Unexpected Gemini API response structure. Full response:', data);
+        throw new Error('Could not extract AI message from Gemini response. Check console for the full response data.');
+      }
+      // --- End of Actual Gemini API Call ---
+
+      if (aiMessage) {
+        messageRef.current.value = aiMessage.trim(); // .trim() to remove any leading/trailing whitespace
+      }
+
+    } catch (error) {
+      console.error("AI Message Enhancement Error Full:", error);
+      alert(`Error enhancing message: ${error.message}. Check console for details. Ensure your API key is correct, the .env variable is properly named, and the Gemini model is supported.`);
+    } finally {
+      setIsAiLoading(false);
+    }
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault()
@@ -196,15 +276,15 @@ const ContactPage = () => {
                       <option value="+61">+61 (Australia)</option>
                       <option value="+49">+49 (Germany)</option>
                     </select>
-                    <input
+                  <input
                       type="tel"
                       id="phone"
                       name="phone"
                       ref={phoneRef}
-                      required
-                      className="w-full px-4 py-2 rounded-lg bg-gray-700/50 border border-gray-600 text-white focus:outline-none focus:border-white transition-colors"
+                    required
+                    className="w-full px-4 py-2 rounded-lg bg-gray-700/50 border border-gray-600 text-white focus:outline-none focus:border-white transition-colors"
                       placeholder="Your phone number"
-                    />
+                  />
                   </div>
                 </div>
 
@@ -231,14 +311,34 @@ const ContactPage = () => {
                   <label htmlFor="message" className="block text-sm font-medium text-gray-300 mb-1">
                     Message *
                   </label>
+                  <div className="relative">
                   <textarea
                     id="message"
                     name="message"
                     ref={messageRef}
                     required
                     rows="4"
-                    className="w-full px-4 py-2 rounded-lg bg-gray-700/50 border border-gray-600 text-white focus:outline-none focus:border-white transition-colors"
+                      className="w-full px-4 py-2 pr-12 rounded-lg bg-gray-700/50 border border-gray-600 text-white focus:outline-none focus:border-white transition-colors"
+                      placeholder="Type your message or click ✨ to enhance with AI"
                   ></textarea>
+                    <button
+                      type="button"
+                      onClick={handleAiEnhanceMessage}
+                      disabled={isAiLoading}
+                      className="absolute top-2 right-2 p-1.5 text-lg text-gray-400 hover:text-white transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                      aria-label="Enhance message with AI"
+                      title="Enhance message with AI"
+                    >
+                      {isAiLoading ? (
+                        <svg className="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                          <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                        </svg>
+                      ) : (
+                        "✨"
+                      )}
+                    </button>
+                  </div>
                 </div>
 
                 <motion.button
