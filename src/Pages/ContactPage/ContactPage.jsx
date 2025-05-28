@@ -319,13 +319,13 @@ const ContactPage = () => {
                     required
                     rows="4"
                       className="w-full px-4 py-2 pr-12 rounded-lg bg-gray-700/50 border border-gray-600 text-white focus:outline-none focus:border-white transition-colors"
-                      placeholder="Type your message or click ✨ to enhance with AI"
+                      placeholder="Type your message or click the icon to enhance with AI"
                   ></textarea>
                     <button
                       type="button"
                       onClick={handleAiEnhanceMessage}
                       disabled={isAiLoading}
-                      className="absolute top-2 right-2 p-1.5 text-lg text-gray-400 hover:text-white transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                      className="absolute top-3 right-3 w-9 h-9 flex items-center justify-center bg-gray-700/60 hover:bg-gray-600/80 text-gray-300 hover:text-white rounded-full transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-sky-500"
                       aria-label="Enhance message with AI"
                       title="Enhance message with AI"
                     >
@@ -335,7 +335,9 @@ const ContactPage = () => {
                           <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                         </svg>
                       ) : (
-                        "✨"
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-5 w-5">
+                           <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+                        </svg>
                       )}
                     </button>
                   </div>
