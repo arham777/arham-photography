@@ -22,27 +22,27 @@ const HomePage = () => {
             alt="Professional photographer"
             className="w-full h-full object-cover"
           />
-          <div className="absolute inset-0 bg-neutral-950/60" />
+          <div className="absolute inset-0 bg-neutral-950/70" />
         </div>
         
-        <div className="relative h-full flex items-center justify-center px-4">
+        <div className="relative h-full flex items-center justify-center px-6 md:px-8">
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.5 }}
-            className="max-w-2xl text-center"
+            className="max-w-3xl text-center space-y-8"
           >
-            <h1 className="text-4xl md:text-6xl font-light tracking-tight text-white mb-6">
+            <h1 className="text-5xl md:text-7xl font-bold tracking-tight text-white">
               Capturing Moments in Their Purest Form
             </h1>
-            <p className="text-lg text-neutral-200 mb-8 font-light">
+            <p className="text-xl text-neutral-200 font-light">
               Professional photography with a minimalist approach
             </p>
             <motion.button
               onClick={scrollToCollections}
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
-              className="px-8 py-3 bg-white text-neutral-900 rounded-full text-sm font-medium hover:bg-neutral-100 transition-colors"
+              className="px-10 py-4 bg-white text-neutral-900 rounded-full text-lg font-medium hover:bg-neutral-100 transition-colors"
             >
               View Work
             </motion.button>
@@ -57,7 +57,7 @@ const HomePage = () => {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-2xl font-light text-white mb-16 text-center"
+            className="text-3xl font-light text-white mb-16 text-center"
           >
             Featured Collections
           </motion.h2>
@@ -70,7 +70,7 @@ const HomePage = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.2 }}
-                className="group relative aspect-[4/5] overflow-hidden"
+                className="group relative aspect-[4/5] overflow-hidden rounded-xl"
               >
                 <img 
                   src={category.image} 
@@ -79,8 +79,8 @@ const HomePage = () => {
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-neutral-950/80 to-transparent">
                   <div className="absolute bottom-0 left-0 right-0 p-8">
-                    <h3 className="text-xl font-light text-white mb-2">{category.title}</h3>
-                    <p className="text-neutral-300 text-sm font-light opacity-0 transform translate-y-4 transition-all duration-300 group-hover:opacity-100 group-hover:translate-y-0">
+                    <h3 className="text-2xl font-medium text-white mb-2">{category.title}</h3>
+                    <p className="text-neutral-300 text-lg font-light opacity-0 transform translate-y-4 transition-all duration-300 group-hover:opacity-100 group-hover:translate-y-0">
                       {category.description}
                     </p>
                   </div>
@@ -95,7 +95,7 @@ const HomePage = () => {
       <section className="py-32 bg-neutral-900">
         <div className="px-4 max-w-3xl mx-auto text-center">
           <motion.p 
-            className="text-lg font-light text-neutral-300 leading-relaxed"
+            className="text-xl font-light text-neutral-300 leading-relaxed"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
