@@ -32,7 +32,7 @@ const HomePage = () => {
             transition={{ duration: 0.8, delay: 0.5 }}
             className="max-w-3xl text-center space-y-8"
           >
-            <h1 className="text-5xl py-8 md:text-7xl font-bold tracking-tight text-white">
+            <h1 className="text-5xl my-8 md:text-7xl font-bold tracking-tight text-white">
               Capturing Moments in Their Purest Form
             </h1>
             <p className="text-xl text-neutral-200 font-light">
