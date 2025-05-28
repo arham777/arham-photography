@@ -33,7 +33,7 @@ const HomePage = () => {
             className="max-w-4xl text-center space-y-12"
           >
             <div className="space-y-6">
-              <h1 className="text-4xl md:text-8xl font-bold tracking-tight text-white leading-tight">
+              <h1 className="text-6xl md:text-4xl font-bold tracking-tight text-white leading-tight">
                 Capturing Moments in Their Purest Form
               </h1>
               <p className="text-2xl text-neutral-200 font-light">
@@ -108,32 +108,3 @@ const HomePage = () => {
             through simplicity and authenticity.
           </motion.p>
         </div>
-      </section>
-    </PageTransition>
-  )
-}
-
-const categories = [
-  {
-    title: "Weddings",
-    description: "Elegant moments, naturally captured",
-    image: "https://images.pexels.com/photos/1244627/pexels-photo-1244627.jpeg?auto=compress&cs=tinysrgb&w=1920",
-  },
-  {
-    title: "Portraits",
-    description: "Authentic expressions, minimal settings",
-    image: "https://images.pexels.com/photos/2613260/pexels-photo-2613260.jpeg?auto=compress&cs=tinysrgb&w=1920",
-  },
-  {
-    title: "Nature",
-    description: "The world in its purest form",
-    image: "https://images.pexels.com/photos/2662116/pexels-photo-2662116.jpeg?auto=compress&cs=tinysrgb&w=1920",
-  },
-  {
-    title: "Products",
-    description: "Simple, elegant product photography",
-    image: "https://images.pexels.com/photos/1667088/pexels-photo-1667088.jpeg?auto=compress&cs=tinysrgb&w=1920",
-  }
-]
-
-export default HomePage
