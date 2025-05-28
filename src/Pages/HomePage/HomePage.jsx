@@ -25,24 +25,27 @@ const HomePage = () => {
           <div className="absolute inset-0 bg-neutral-950/70" />
         </div>
         
-        <div className="relative h-full flex items-center justify-center px-6 md:px-8">
+        <div className="relative h-full flex items-center justify-center px-6 md:px-8 pt-32">
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.5 }}
-            className="max-w-3xl text-center space-y-8"
+            className="max-w-4xl text-center space-y-12"
           >
-            <h1 className="text-5xl md:text-7xl font-bold tracking-tight text-white">
-              Capturing Moments in Their Purest Form
-            </h1>
-            <p className="text-xl text-neutral-200 font-light">
-              Professional photography with a minimalist approach
-            </p>
+            <div className="space-y-6">
+              <h1 className="text-6xl md:text-8xl font-bold tracking-tight text-white leading-tight">
+                Capturing Moments in Their Purest Form
+              </h1>
+              <p className="text-2xl text-neutral-200 font-light">
+                Professional photography with a minimalist approach
+              </p>
+            </div>
+            
             <motion.button
               onClick={scrollToCollections}
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
-              className="px-10 py-4 bg-white text-neutral-900 rounded-full text-lg font-medium hover:bg-neutral-100 transition-colors"
+              className="px-12 py-5 bg-white text-neutral-900 rounded-full text-lg font-medium hover:bg-neutral-100 transition-colors"
             >
               View Work
             </motion.button>
