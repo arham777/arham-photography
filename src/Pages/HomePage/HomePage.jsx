@@ -15,34 +15,34 @@ const HomePage = () => {
       <section className="relative h-screen -mt-24">
         <div className="absolute inset-0">
           <motion.img 
-            initial={{ scale: 1.1, opacity: 0 }}
+            initial={{ scale: 1.05, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
-            transition={{ duration: 1.5 }}
+            transition={{ duration: 1.2 }}
             src="https://images.pexels.com/photos/2486168/pexels-photo-2486168.jpeg?auto=compress&cs=tinysrgb&w=1920"
             alt="Professional photographer"
             className="w-full h-full object-cover"
           />
-          <div className="absolute inset-0 bg-neutral-950/70" />
+          <div className="absolute inset-0 bg-neutral-950/60" />
         </div>
         
-        <div className="relative h-full flex items-center justify-center px-6 md:px-8">
+        <div className="relative h-full flex items-center justify-center px-4 md:px-6">
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.5 }}
-            className="max-w-3xl text-center space-y-8"
+            className="max-w-2xl text-center space-y-5"
           >
-            <h1 className="text-5xl md:text-7xl font-bold tracking-tight text-white">
+            <h1 className="text-3xl md:text-5xl font-medium tracking-tight text-white">
               Capturing Moments in Their Purest Form
             </h1>
-            <p className="text-xl text-neutral-200 font-light">
+            <p className="text-lg text-neutral-200 font-light">
               Professional photography with a minimalist approach
             </p>
             <motion.button
               onClick={scrollToCollections}
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
-              className="px-10 py-4 bg-white text-neutral-900 rounded-full text-lg font-medium hover:bg-neutral-100 transition-colors"
+              className="mt-2 px-8 py-3 bg-white text-neutral-900 rounded-full text-base font-medium hover:bg-neutral-100 transition-colors"
             >
               View Work
             </motion.button>
@@ -100,7 +100,7 @@ const HomePage = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
           >
-            With a decade behind the lens, I've developed a minimalist approach to photography
+            With a decade behind the lens, I&apos;ve developed a minimalist approach to photography
             that focuses on the essential elements of each moment. My work aims to tell stories
             through simplicity and authenticity.
           </motion.p>

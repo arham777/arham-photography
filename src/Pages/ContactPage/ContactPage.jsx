@@ -5,7 +5,8 @@ import { useRef, useState } from "react"
 const ContactPage = () => {
   const firstNameRef = useRef()
   const lastNameRef = useRef()
-  const emailRef = useRef()
+  const countryCodeRef = useRef()
+  const phoneRef = useRef()
   const subjectRef = useRef()
   const messageRef = useRef()
   const formRef = useRef()
@@ -18,13 +19,35 @@ const ContactPage = () => {
     const formData = {
       firstName: firstNameRef.current.value,
       lastName: lastNameRef.current.value,
-      email: emailRef.current.value,
+      countryCode: countryCodeRef.current.value,
+      phone: phoneRef.current.value,
       subject: subjectRef.current.value,
       message: messageRef.current.value
     }
 
-    // Log the form data
-    console.log('Form submitted:', formData)
+    // Create WhatsApp message text
+    const ownerWhatsappNumber = "923264002982" // Include country code (92 for Pakistan)
+    const formattedPhone = `${formData.countryCode}${formData.phone.replace(/^0+/, '')}` // Remove leading zeros if present
+    
+    let messageText = `🌟 *PHOTOGRAPHY BOOKING INQUIRY* 🌟\n\n` +
+      `Dear Arham Photography,\n\n` +
+      `I would like to inquire about your photography services.\n\n` +
+      `*Client Details:*\n` +
+      `👤 *Name:* ${formData.firstName} ${formData.lastName}\n` +
+      `📱 *Contact:* ${formattedPhone}\n\n` +
+      `*Service Required:* ${formData.subject} Photography\n\n` +
+      `*Client Message:*\n${formData.message}\n\n` +
+      `I look forward to your response.\n` +
+      `Thank you.`
+      
+    // Encode the message for URL
+    const encodedMessage = encodeURIComponent(messageText)
+    
+    // Create WhatsApp URL with correct country code format
+    const whatsappUrl = `https://wa.me/${ownerWhatsappNumber}?text=${encodedMessage}`
+    
+    // Open WhatsApp in a new tab
+    window.open(whatsappUrl, '_blank')
 
     // Reset the form
     formRef.current.reset()
@@ -118,7 +141,7 @@ const ContactPage = () => {
               transition={{ duration: 0.5 }}
               className="bg-gray-800/50 backdrop-blur-sm rounded-2xl p-8"
             >
-              <h2 className="text-2xl font-bold text-white mb-6">Send a Message</h2>
+              <h2 className="text-2xl font-bold text-white mb-6">Whatsapp Me</h2>
               
               <form ref={formRef} onSubmit={handleSubmit} className="space-y-6">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -152,17 +175,37 @@ const ContactPage = () => {
                 </div>
 
                 <div>
-                  <label htmlFor="email" className="block text-sm font-medium text-gray-300 mb-1">
-                    Email *
+                  <label htmlFor="phone" className="block text-sm font-medium text-gray-300 mb-1">
+                    Phone Number *
                   </label>
-                  <input
-                    type="email"
-                    id="email"
-                    name="email"
-                    ref={emailRef}
-                    required
-                    className="w-full px-4 py-2 rounded-lg bg-gray-700/50 border border-gray-600 text-white focus:outline-none focus:border-white transition-colors"
-                  />
+                  <div className="flex flex-wrap md:flex-nowrap gap-2 w-full">
+                    <select
+                      id="countryCode"
+                      name="countryCode"
+                      ref={countryCodeRef}
+                      required
+                      className="w-full md:w-auto md:min-w-[130px] px-3 py-2 rounded-lg bg-gray-700/50 border border-gray-600 text-white focus:outline-none focus:border-white transition-colors"
+                      defaultValue="+92"
+                    >
+                      <option value="+92">+92 (Pakistan)</option>
+                      <option value="+1">+1 (US/Canada)</option>
+                      <option value="+44">+44 (UK)</option>
+                      <option value="+91">+91 (India)</option>
+                      <option value="+971">+971 (UAE)</option>
+                      <option value="+966">+966 (Saudi)</option>
+                      <option value="+61">+61 (Australia)</option>
+                      <option value="+49">+49 (Germany)</option>
+                    </select>
+                    <input
+                      type="tel"
+                      id="phone"
+                      name="phone"
+                      ref={phoneRef}
+                      required
+                      className="w-full px-4 py-2 rounded-lg bg-gray-700/50 border border-gray-600 text-white focus:outline-none focus:border-white transition-colors"
+                      placeholder="Your phone number"
+                    />
+                  </div>
                 </div>
 
                 <div>
@@ -174,7 +217,7 @@ const ContactPage = () => {
                     name="subject"
                     ref={subjectRef}
                     required
-                    className="w-full px-4 py-2 rounded-lg bg-gray-700/50 border border-gray-600 text-white focus:outline-none focus:border-white transition-colors"
+                    className="w-full px-4 py-2 rounded-lg bg-gray-700/100 border border-gray-600 text-white focus:outline-none focus:border-white transition-colors"
                   >
                     <option value="">Select a type</option>
                     <option value="wedding">Wedding Photography</option>
