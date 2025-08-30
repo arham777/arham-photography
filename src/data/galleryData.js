@@ -1,37 +1,37 @@
 // Gallery categories and their images
+
+// Auto-import product photos named like prod-1.jpg/png/webp/avif from src/assets/products
+// and build a sorted list with description set to null
+const productImports = import.meta.glob(
+  "../assets/products/prod-*.{jpg,jpeg,png,webp,avif}",
+  { eager: true, import: "default" }
+)
+
+const products = Object.entries(productImports)
+  .sort(([a], [b]) => {
+    const na = Number(a.match(/prod-(\d+)/)?.[1] ?? 0)
+    const nb = Number(b.match(/prod-(\d+)/)?.[1] ?? 0)
+    return na - nb
+  })
+  .map(([, url], i) => ({ id: i + 1, url, description: null }))
+
+// Auto-import nature photos named like nat-1.jpg/png from src/assets/nature
+// and build a sorted list with description set to null
+const natureImports = import.meta.glob(
+  "../assets/nature/nat-*.{jpg,jpeg,png}",
+  { eager: true, import: "default" }
+)
+
+const nature = Object.entries(natureImports)
+  .sort(([a], [b]) => {
+    const na = Number(a.match(/nat-(\d+)/)?.[1] ?? 0)
+    const nb = Number(b.match(/nat-(\d+)/)?.[1] ?? 0)
+    return na - nb
+  })
+  .map(([, url], i) => ({ id: i + 1, url, description: null }))
+
 export const galleryData = {
-  products: [
-    {
-      id: 1,
-      url: "https://images.pexels.com/photos/1667088/pexels-photo-1667088.jpeg",
-      description: "Premium Watch Photography"
-    },
-    {
-      id: 2,
-      url: "https://images.pexels.com/photos/2529148/pexels-photo-2529148.jpeg",
-      description: "Athletic Footwear"
-    },
-    {
-      id: 3,
-      url: "https://images.pexels.com/photos/1037992/pexels-photo-1037992.jpeg",
-      description: "Premium Headphones"
-    },
-    {
-      id: 4,
-      url: "https://images.pexels.com/photos/190819/pexels-photo-190819.jpeg",
-      description: "Luxury Timepiece"
-    },
-    {
-      id: 5,
-      url: "https://images.pexels.com/photos/1279107/pexels-photo-1279107.jpeg",
-      description: "Minimal Product Shot"
-    },
-    {
-      id: 6,
-      url: "https://images.pexels.com/photos/2783873/pexels-photo-2783873.jpeg",
-      description: "Perfume Collection"
-    }
-  ],
+  products,
   weddings: [
     {
       id: 1,
@@ -64,38 +64,7 @@ export const galleryData = {
       description: "Reception Moments"
     }
   ],
-  nature: [
-    {
-      id: 1,
-      url: "https://images.pexels.com/photos/2662116/pexels-photo-2662116.jpeg",
-      description: "Mountain Sunrise"
-    },
-    {
-      id: 2,
-      url: "https://images.pexels.com/photos/2559941/pexels-photo-2559941.jpeg",
-      description: "Serene Lake"
-    },
-    {
-      id: 3,
-      url: "https://images.pexels.com/photos/2387873/pexels-photo-2387873.jpeg",
-      description: "Forest Light"
-    },
-    {
-      id: 4,
-      url: "https://images.pexels.com/photos/1671324/pexels-photo-1671324.jpeg",
-      description: "Mountain Lake Reflection"
-    },
-    {
-      id: 5,
-      url: "https://images.pexels.com/photos/1699020/pexels-photo-1699020.jpeg",
-      description: "Ocean Waves"
-    },
-    {
-      id: 6,
-      url: "https://images.pexels.com/photos/1834399/pexels-photo-1834399.jpeg",
-      description: "Desert Sunset"
-    }
-  ],
+  nature,
   portraits: [
     {
       id: 1,

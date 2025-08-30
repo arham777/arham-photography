@@ -1,6 +1,9 @@
 import { motion } from "framer-motion"
 import { useRef } from "react"
 import PageTransition from "../../Components/Layout/PageTransition"
+import productHero from "../../assets/products/prod-4.png"
+import natureHero from "../../assets/nature/nat-12.jpg"
+
 
 const HomePage = () => {
   const collectionsRef = useRef(null)
@@ -18,7 +21,7 @@ const HomePage = () => {
             initial={{ scale: 1.05, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             transition={{ duration: 1.2 }}
-            src="https://images.pexels.com/photos/2486168/pexels-photo-2486168.jpeg?auto=compress&cs=tinysrgb&w=1920"
+            src={productHero}
             alt="Professional photographer"
             className="w-full h-full object-cover"
           />
@@ -124,12 +127,12 @@ const categories = [
   {
     title: "Nature",
     description: "The world in its purest form",
-    image: "https://images.pexels.com/photos/2662116/pexels-photo-2662116.jpeg?auto=compress&cs=tinysrgb&w=1920",
+    image: natureHero,
   },
   {
     title: "Products",
     description: "Simple, elegant product photography",
-    image: "https://images.pexels.com/photos/1667088/pexels-photo-1667088.jpeg?auto=compress&cs=tinysrgb&w=1920",
+    image: productHero,
   }
 ]
 
