@@ -3,6 +3,7 @@ import { useRef } from "react"
 import PageTransition from "../../Components/Layout/PageTransition"
 import productHero from "../../assets/products/prod-4.png"
 import natureHero from "../../assets/nature/nat-12.jpg"
+import streetHero from "../../assets/street/street-5.jpg"
 
 
 const HomePage = () => {
@@ -133,6 +134,11 @@ const categories = [
     title: "Products",
     description: "Simple, elegant product photography",
     image: productHero,
+  },
+  {
+    title: "Streets",
+    description: "Life in motion, candid and raw",
+    image: streetHero,
   }
 ]
 

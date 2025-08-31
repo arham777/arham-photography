@@ -5,6 +5,7 @@ import ProductsPage from "./Pages/ProductsPage/ProductsPage"
 import WeddingPage from "./Pages/WeddingPage/WeddingPage"
 import PortraitPage from "./Pages/PortraitPage/PortraitPage"
 import NaturePage from "./Pages/NaturePage/NaturePage"
+import StreetsPage from "./Pages/StreetsPage/StreetsPage"
 import Header from "./Components/Header/Header"
 import ContactPage from "./Pages/ContactPage/ContactPage"
 
@@ -19,6 +20,7 @@ const AnimatedRoutes = () => {
         <Route path="/weddings" element={<WeddingPage />} />
         <Route path="/nature" element={<NaturePage />} />
         <Route path="/portraits" element={<PortraitPage />} />
+        <Route path="/streets" element={<StreetsPage />} />
         <Route path="/contact" element={<ContactPage />} />
       </Routes>
     </AnimatePresence>

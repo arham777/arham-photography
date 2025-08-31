@@ -1,13 +1,14 @@
 import PageTemplate from "../../Components/Layout/PageTemplate"
 import Gallery from "../../Components/Gallery/Gallery"
 import { galleryData } from "../../data/galleryData"
+import portraitHero from "../../assets/portraits/port-12.jpg"
 
 const PortraitPage = () => {
   return (
     <PageTemplate
       title="Portrait Photography"
       description="Capturing personalities, one frame at a time"
-      heroImage="https://images.pexels.com/photos/2613260/pexels-photo-2613260.jpeg"
+      heroImage={portraitHero}
     >
       <Gallery images={galleryData.portraits} />
     </PageTemplate>

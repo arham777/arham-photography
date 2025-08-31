@@ -30,6 +30,36 @@ const nature = Object.entries(natureImports)
   })
   .map(([, url], i) => ({ id: i + 1, url, description: null }))
 
+// Auto-import portrait photos named like port-1.jpg/png from src/assets/portraits
+// and build a sorted list with description set to null
+const portraitImports = import.meta.glob(
+  "../assets/portraits/port-*.{jpg,jpeg,png}",
+  { eager: true, import: "default" }
+)
+
+const portraits = Object.entries(portraitImports)
+  .sort(([a], [b]) => {
+    const na = Number(a.match(/port-(\d+)/)?.[1] ?? 0)
+    const nb = Number(b.match(/port-(\d+)/)?.[1] ?? 0)
+    return na - nb
+  })
+  .map(([, url], i) => ({ id: i + 1, url, description: null }))
+
+// Auto-import street photos named like street-1.jpg/png from src/assets/street
+// and build a sorted list with description set to null
+const streetImports = import.meta.glob(
+  "../assets/street/street-*.{jpg,jpeg,png}",
+  { eager: true, import: "default" }
+)
+
+const streets = Object.entries(streetImports)
+  .sort(([a], [b]) => {
+    const na = Number(a.match(/street-(\d+)/)?.[1] ?? 0)
+    const nb = Number(b.match(/street-(\d+)/)?.[1] ?? 0)
+    return na - nb
+  })
+  .map(([, url], i) => ({ id: i + 1, url, description: null }))
+
 export const galleryData = {
   products,
   weddings: [
@@ -65,36 +95,6 @@ export const galleryData = {
     }
   ],
   nature,
-  portraits: [
-    {
-      id: 1,
-      url: "https://images.pexels.com/photos/2613260/pexels-photo-2613260.jpeg",
-      description: "Natural Light Portrait"
-    },
-    {
-      id: 2,
-      url: "https://images.pexels.com/photos/2726111/pexels-photo-2726111.jpeg",
-      description: "Studio Portrait"
-    },
-    {
-      id: 3,
-      url: "https://images.pexels.com/photos/1559486/pexels-photo-1559486.jpeg",
-      description: "Professional Headshot"
-    },
-    {
-      id: 4,
-      url: "https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg",
-      description: "Outdoor Portrait"
-    },
-    {
-      id: 5,
-      url: "https://images.pexels.com/photos/1689731/pexels-photo-1689731.jpeg",
-      description: "Lifestyle Portrait"
-    },
-    {
-      id: 6,
-      url: "https://images.pexels.com/photos/1516680/pexels-photo-1516680.jpeg",
-      description: "Black & White Portrait"
-    }
-  ]
+  portraits,
+  streets
 }
