@@ -1,9 +1,8 @@
 // Gallery categories and their images
 
-// Auto-import product photos named like prod-1.jpg/png/webp/avif from src/assets/products
-// and build a sorted list with description set to null
+// Auto-import product photos - plain URLs for dev, imagetools for build
 const productImports = import.meta.glob(
-  "../assets/products/prod-*.{jpg,jpeg,png,webp,avif}",
+  "../assets/products/prod-*.{jpg,jpeg,png}",
   { eager: true, import: "default" }
 )
 
@@ -15,8 +14,7 @@ const products = Object.entries(productImports)
   })
   .map(([, url], i) => ({ id: i + 1, url, description: null }))
 
-// Auto-import nature photos named like nat-1.jpg/png from src/assets/nature
-// and build a sorted list with description set to null
+// Auto-import nature photos - plain URLs for dev, imagetools for build
 const natureImports = import.meta.glob(
   "../assets/nature/nat-*.{jpg,jpeg,png}",
   { eager: true, import: "default" }
@@ -30,8 +28,7 @@ const nature = Object.entries(natureImports)
   })
   .map(([, url], i) => ({ id: i + 1, url, description: null }))
 
-// Auto-import portrait photos named like port-1.jpg/png from src/assets/portraits
-// and build a sorted list with description set to null
+// Auto-import portrait photos - plain URLs for dev, imagetools for build  
 const portraitImports = import.meta.glob(
   "../assets/portraits/port-*.{jpg,jpeg,png}",
   { eager: true, import: "default" }
@@ -45,8 +42,7 @@ const portraits = Object.entries(portraitImports)
   })
   .map(([, url], i) => ({ id: i + 1, url, description: null }))
 
-// Auto-import street photos named like street-1.jpg/png from src/assets/street
-// and build a sorted list with description set to null
+// Auto-import street photos - plain URLs for dev, imagetools for build
 const streetImports = import.meta.glob(
   "../assets/street/street-*.{jpg,jpeg,png}",
   { eager: true, import: "default" }

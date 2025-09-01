@@ -1,17 +1,33 @@
 import { motion } from "framer-motion"
 import PageTransition from "./PageTransition"
+import PropTypes from "prop-types"
 
 const PageTemplate = ({ title, description, heroImage, children }) => {
   return (
     <PageTransition>
       {/* Hero Section */}
-      <section className="relative h-[60vh] -mt-24 pt-24">
+      <section className="relative h-[60vh] -mt-24 pt-24 bg-zinc-900">
         <div className="absolute inset-0">
-          <img 
-            src={heroImage}
-            alt={title}
-            className="w-full h-full object-cover"
-          />
+          {heroImage && heroImage.sources && heroImage.img ? (
+            <picture>
+              {Object.values(heroImage.sources).map((s) => (
+                <source key={s.type} srcSet={s.srcset} type={s.type} sizes="100vw" />
+              ))}
+              <img 
+                src={heroImage.img.src}
+                alt={title}
+                className="w-full h-full object-cover"
+                decoding="async"
+              />
+            </picture>
+          ) : (
+            <img 
+              src={heroImage}
+              alt={title}
+              className="w-full h-full object-cover"
+              decoding="async"
+            />
+          )}
           <div className="absolute inset-0 bg-zinc-900/70" />
         </div>
         
@@ -41,3 +57,24 @@ const PageTemplate = ({ title, description, heroImage, children }) => {
 }
 
 export default PageTemplate
+
+PageTemplate.propTypes = {
+  title: PropTypes.string.isRequired,
+  description: PropTypes.string.isRequired,
+  heroImage: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.shape({
+      sources: PropTypes.arrayOf(
+        PropTypes.shape({
+          srcset: PropTypes.string.isRequired,
+          type: PropTypes.string.isRequired,
+        })
+      ).isRequired,
+      img: PropTypes.shape({
+        src: PropTypes.string.isRequired,
+        srcset: PropTypes.string,
+      }).isRequired,
+    })
+  ]).isRequired,
+  children: PropTypes.node,
+}

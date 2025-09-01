@@ -6,10 +6,19 @@
 
 body {
   @apply bg-zinc-900 text-zinc-100 font-sans;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+html, body, #root {
+  height: 100%;
+  background-color: #0a0a0b;
 }
 
 .image-hover {
-  @apply transition-all duration-700 ease-in-out;
+  transition: transform 700ms ease-in-out, filter 700ms ease-in-out;
+  will-change: transform, filter;
 }
 
 .image-hover:hover {
@@ -18,7 +27,9 @@ body {
 }
 
 .fade-up {
-  @apply opacity-0 translate-y-4 transition-all duration-700 ease-out;
+  @apply opacity-0 translate-y-4;
+  transition: opacity 700ms ease-out, transform 700ms ease-out;
+  will-change: opacity, transform;
 }
 
 .fade-up.in-view {
@@ -35,4 +46,41 @@ body {
   h3 {
     @apply font-bold tracking-tight;
   }
+}
+
+/* Pinterest-Style Masonry Layout */
+.masonry-container {
+  /* Let react-responsive-masonry handle the layout */
+}
+
+.masonry-container > div {
+  margin-bottom: 0 !important;
+  break-inside: avoid;
+  page-break-inside: avoid;
+  display: inline-block;
+  width: 100%;
+  vertical-align: top;
+}
+
+.masonry-container img {
+  width: 100% !important;
+  height: auto !important;
+  display: block !important;
+  vertical-align: top;
+  border-radius: 8px;
+  max-width: 100%;
+  /* Preserve original aspect ratio */
+  object-fit: contain;
+  background: transparent;
+}
+
+/* Smooth transitions */
+.masonry-container .group {
+  transition: all 0.3s ease;
+}
+
+/* Better spacing for natural masonry flow */
+.masonry-container .group:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
 }

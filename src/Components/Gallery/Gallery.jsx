@@ -136,8 +136,19 @@ const Gallery = ({ images }) => {
 
   return (
     <div className="py-20">
-      <ResponsiveMasonry columnsCountBreakPoints={{ 0: 1, 640: 2, 1024: 3 }}>
-        <Masonry gutter="8px">
+      <ResponsiveMasonry 
+        columnsCountBreakPoints={{ 
+          0: 1,        // Mobile: 1 column
+          480: 2,      // Small mobile: 2 columns  
+          768: 3,      // Tablet: 3 columns
+          1024: 3,     // Desktop: 3 columns
+          1280: 4      // Large desktop: 4 columns
+        }}
+      >
+        <Masonry 
+          gutter="16px"
+          className="masonry-container"
+        >
           {shuffledImages.map((photo, index) => (
             <motion.div
               key={photo.id ?? index}
@@ -145,15 +156,52 @@ const Gallery = ({ images }) => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.2 }}
               transition={{ duration: 0.5, delay: Math.min(index * 0.03, 0.3) }}
-              className="relative group overflow-hidden rounded-lg cursor-pointer"
+              className="relative group overflow-hidden rounded-lg cursor-pointer mb-4 break-inside-avoid"
               onClick={() => openLightbox(index)}
+              style={{ 
+                breakInside: 'avoid',
+                pageBreakInside: 'avoid',
+                display: 'inline-block',
+                width: '100%'
+              }}
             >
-              <img
-                src={photo.url}
-                alt={photo.description ?? ""}
-                loading="lazy"
-                className="w-full h-auto object-cover transition-transform duration-500 group-hover:scale-[1.02]"
-              />
+              {photo.picture?.sources && photo.picture?.img?.src ? (
+                <picture>
+                  {Object.values(photo.picture.sources).map((s) => (
+                    <source 
+                      key={s.type} 
+                      srcSet={s.srcset} 
+                      type={s.type} 
+                      sizes="(min-width:1280px) 25vw, (min-width:1024px) 33vw, (min-width:768px) 33vw, (min-width:480px) 50vw, 100vw" 
+                    />
+                  ))}
+                  <img
+                    src={photo.picture.img.src}
+                    alt={photo.description ?? ""}
+                    loading="lazy"
+                    className="w-full h-auto object-cover transition-transform duration-500 group-hover:scale-[1.02] block"
+                    style={{ 
+                      display: 'block',
+                      width: '100%',
+                      height: 'auto',
+                      verticalAlign: 'top'
+                    }}
+                  />
+                </picture>
+              ) : (
+                <img
+                  src={photo.url}
+                  alt={photo.description ?? ""}
+                  loading="lazy"
+                  className="w-full h-auto object-cover transition-transform duration-500 group-hover:scale-[1.02] block"
+                  style={{ 
+                    display: 'block',
+                    width: '100%',
+                    height: 'auto',
+                    verticalAlign: 'top'
+                  }}
+                />
+              )}
               {photo.description && (
                 <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/60 via-black/0 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                   <div className="absolute bottom-0 left-0 right-0 p-3">
@@ -215,31 +263,61 @@ const Gallery = ({ images }) => {
                       key={img.id ?? i}
                       className="min-w-0 shrink-0 grow-0 basis-full flex items-center justify-center bg-black overflow-hidden"
                     >
-                      <motion.img
-                        ref={i === lightboxIndex ? (el) => { currentImageRef.current = el } : null}
-                        src={img.url}
-                        alt={img.description ?? ""}
-                        className="max-h-[85vh] object-contain rounded-lg shadow-2xl"
-                        loading="eager"
-                        style={{ x, y, scale: zoomScale, cursor: zoomScale > 1 ? "grab" : "zoom-in" }}
-                        drag={zoomScale > 1}
-                        dragConstraints={dragBounds}
-                        dragElastic={0.05}
-                        dragMomentum={false}
-                        onPointerDown={(e) => {
-                          if (zoomScale > 1) e.stopPropagation()
-                        }}
-                        onDoubleClick={(e) => {
-                          e.stopPropagation()
-                          if (zoomScale > 1) {
-                            setZoomScale(1)
-                            x.set(0)
-                            y.set(0)
-                          } else {
-                            setZoomScale(2)
-                          }
-                        }}
-                      />
+                      {img.picture?.sources && img.picture?.img?.src ? (
+                        <motion.img
+                          ref={i === lightboxIndex ? (el) => { currentImageRef.current = el } : null}
+                          src={img.picture.img.src}
+                          srcSet={img.picture.img.srcset}
+                          sizes="90vw"
+                          alt={img.description ?? ""}
+                          className="max-h-[85vh] object-contain rounded-lg shadow-2xl"
+                          loading="eager"
+                          style={{ x, y, scale: zoomScale, cursor: zoomScale > 1 ? "grab" : "zoom-in" }}
+                          drag={zoomScale > 1}
+                          dragConstraints={dragBounds}
+                          dragElastic={0.05}
+                          dragMomentum={false}
+                          onPointerDown={(e) => {
+                            if (zoomScale > 1) e.stopPropagation()
+                          }}
+                          onDoubleClick={(e) => {
+                            e.stopPropagation()
+                            if (zoomScale > 1) {
+                              setZoomScale(1)
+                              x.set(0)
+                              y.set(0)
+                            } else {
+                              setZoomScale(2)
+                            }
+                          }}
+                        />
+                      ) : (
+                        <motion.img
+                          ref={i === lightboxIndex ? (el) => { currentImageRef.current = el } : null}
+                          src={img.url}
+                          alt={img.description ?? ""}
+                          className="max-h-[85vh] object-contain rounded-lg shadow-2xl"
+                          loading="eager"
+                          style={{ x, y, scale: zoomScale, cursor: zoomScale > 1 ? "grab" : "zoom-in" }}
+                          drag={zoomScale > 1}
+                          dragConstraints={dragBounds}
+                          dragElastic={0.05}
+                          dragMomentum={false}
+                          onPointerDown={(e) => {
+                            if (zoomScale > 1) e.stopPropagation()
+                          }}
+                          onDoubleClick={(e) => {
+                            e.stopPropagation()
+                            if (zoomScale > 1) {
+                              setZoomScale(1)
+                              x.set(0)
+                              y.set(0)
+                            } else {
+                              setZoomScale(2)
+                            }
+                          }}
+                        />
+                      )}
                     </div>
                   ))}
                 </div>

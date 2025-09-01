@@ -19,7 +19,6 @@ const Header = () => {
   const navItems = [
     { path: "/", label: "Home" },
     { path: "/products", label: "Products" },
-    { path: "/weddings", label: "Weddings" },
     { path: "/nature", label: "Nature" },
     { path: "/portraits", label: "Portraits" },
     { path: "/streets", label: "Streets" },
@@ -27,8 +26,8 @@ const Header = () => {
   ]
 
   return (
-    <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-      isScrolled ? 'bg-zinc-900/90 backdrop-blur-lg' : 'bg-transparent'
+    <header className={`fixed top-0 left-0 right-0 z-50 transition-colors duration-300 ${
+      isScrolled ? 'bg-zinc-900/80' : 'bg-transparent'
     }`}>
       <nav className="px-6 py-6">
         {/* Desktop Menu */}
