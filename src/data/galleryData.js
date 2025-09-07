@@ -1,60 +1,103 @@
 // Gallery categories and their images
 
-// Auto-import product photos - plain URLs for dev, imagetools for build
-const productImports = import.meta.glob(
-  "../assets/products/prod-*.{jpg,jpeg,png}",
+// Build with responsive sources for raster images via vite-imagetools,
+// merge with RAW imports for a safe fallback URL, and keep SVGs/GIFs as direct URLs
+const buildFromMixed = (rasterPictureMap, rawRasterMap, svgMap) => {
+  const byPath = new Map()
+
+  // 1) Seed with RAW raster URLs (no imagetools) as a safe fallback
+  Object.entries(rawRasterMap).forEach(([path, url]) => {
+    const file = path.split("/").pop() || ""
+    const description = file.replace(/\.[^.]+$/, "")
+    byPath.set(path, { path, url, rawUrl: url, description })
+  })
+
+  // 2) Overlay imagetools picture objects (keys contain query; normalize to base path)
+  Object.entries(rasterPictureMap).forEach(([pathWithQuery, picture]) => {
+    const basePath = pathWithQuery.split("?")[0]
+    const file = basePath.split("/").pop() || ""
+    const description = file.replace(/\.[^.]+$/, "")
+    const existing = byPath.get(basePath) || { path: basePath, url: "", rawUrl: "", description }
+    const url = picture?.img?.src || existing.url || ""
+    const rawUrl = existing.rawUrl || existing.url || ""
+    byPath.set(basePath, { ...existing, picture, url, rawUrl, description })
+  })
+
+  // 3) Add SVG/GIF entries (not processed by imagetools)
+  Object.entries(svgMap).forEach(([path, url]) => {
+    const file = path.split("/").pop() || ""
+    const description = file.replace(/\.[^.]+$/, "")
+    const existing = byPath.get(path)
+    if (existing) {
+      // Keep any existing data, but ensure URL/description present
+      byPath.set(path, { ...existing, url: existing.url || url, rawUrl: existing.rawUrl || url, description: existing.description || description })
+    } else {
+      byPath.set(path, { path, url, rawUrl: url, description })
+    }
+  })
+
+  // 4) Deterministic order, then assign IDs
+  const items = Array.from(byPath.values()).sort((a, b) => a.path.localeCompare(b.path))
+  return items.map(({ path, ...rest }, i) => ({ id: i + 1, ...rest }))
+}
+
+// Auto-import all images in each category folder (responsive + dynamic)
+// Note: Using imagetools to generate AVIF/WEBP/JPEG across multiple widths
+const productRasterImports = import.meta.glob(
+  "../assets/products/*.{jpg,jpeg,png,webp,avif}?as=picture&format=avif;webp;jpeg&w=480;768;1024;1280;1600&quality=75&imagetools",
   { eager: true, import: "default" }
 )
-
-const products = Object.entries(productImports)
-  .sort(([a], [b]) => {
-    const na = Number(a.match(/prod-(\d+)/)?.[1] ?? 0)
-    const nb = Number(b.match(/prod-(\d+)/)?.[1] ?? 0)
-    return na - nb
-  })
-  .map(([, url], i) => ({ id: i + 1, url, description: null }))
-
-// Auto-import nature photos - plain URLs for dev, imagetools for build
-const natureImports = import.meta.glob(
-  "../assets/nature/nat-*.{jpg,jpeg,png}",
+const productRawRasterImports = import.meta.glob(
+  "../assets/products/*.{jpg,jpeg,png,webp,avif}",
   { eager: true, import: "default" }
 )
-
-const nature = Object.entries(natureImports)
-  .sort(([a], [b]) => {
-    const na = Number(a.match(/nat-(\d+)/)?.[1] ?? 0)
-    const nb = Number(b.match(/nat-(\d+)/)?.[1] ?? 0)
-    return na - nb
-  })
-  .map(([, url], i) => ({ id: i + 1, url, description: null }))
-
-// Auto-import portrait photos - plain URLs for dev, imagetools for build  
-const portraitImports = import.meta.glob(
-  "../assets/portraits/port-*.{jpg,jpeg,png}",
+const productSvgImports = import.meta.glob(
+  "../assets/products/*.{svg,gif}",
   { eager: true, import: "default" }
 )
+const products = buildFromMixed(productRasterImports, productRawRasterImports, productSvgImports)
 
-const portraits = Object.entries(portraitImports)
-  .sort(([a], [b]) => {
-    const na = Number(a.match(/port-(\d+)/)?.[1] ?? 0)
-    const nb = Number(b.match(/port-(\d+)/)?.[1] ?? 0)
-    return na - nb
-  })
-  .map(([, url], i) => ({ id: i + 1, url, description: null }))
-
-// Auto-import street photos - plain URLs for dev, imagetools for build
-const streetImports = import.meta.glob(
-  "../assets/street/street-*.{jpg,jpeg,png}",
+const natureRasterImports = import.meta.glob(
+  "../assets/nature/*.{jpg,jpeg,png,webp,avif}?as=picture&format=avif;webp;jpeg&w=480;768;1024;1280;1600&quality=75&imagetools",
   { eager: true, import: "default" }
 )
+const natureRawRasterImports = import.meta.glob(
+  "../assets/nature/*.{jpg,jpeg,png,webp,avif}",
+  { eager: true, import: "default" }
+)
+const natureSvgImports = import.meta.glob(
+  "../assets/nature/*.{svg,gif}",
+  { eager: true, import: "default" }
+)
+const nature = buildFromMixed(natureRasterImports, natureRawRasterImports, natureSvgImports)
 
-const streets = Object.entries(streetImports)
-  .sort(([a], [b]) => {
-    const na = Number(a.match(/street-(\d+)/)?.[1] ?? 0)
-    const nb = Number(b.match(/street-(\d+)/)?.[1] ?? 0)
-    return na - nb
-  })
-  .map(([, url], i) => ({ id: i + 1, url, description: null }))
+const portraitRasterImports = import.meta.glob(
+  "../assets/portraits/*.{jpg,jpeg,png,webp,avif}?as=picture&format=avif;webp;jpeg&w=480;768;1024;1280;1600&quality=75&imagetools",
+  { eager: true, import: "default" }
+)
+const portraitRawRasterImports = import.meta.glob(
+  "../assets/portraits/*.{jpg,jpeg,png,webp,avif}",
+  { eager: true, import: "default" }
+)
+const portraitSvgImports = import.meta.glob(
+  "../assets/portraits/*.{svg,gif}",
+  { eager: true, import: "default" }
+)
+const portraits = buildFromMixed(portraitRasterImports, portraitRawRasterImports, portraitSvgImports)
+
+const streetRasterImports = import.meta.glob(
+  "../assets/street/*.{jpg,jpeg,png,webp,avif}?as=picture&format=avif;webp;jpeg&w=480;768;1024;1280;1600&quality=75&imagetools",
+  { eager: true, import: "default" }
+)
+const streetRawRasterImports = import.meta.glob(
+  "../assets/street/*.{jpg,jpeg,png,webp,avif}",
+  { eager: true, import: "default" }
+)
+const streetSvgImports = import.meta.glob(
+  "../assets/street/*.{svg,gif}",
+  { eager: true, import: "default" }
+)
+const streets = buildFromMixed(streetRasterImports, streetRawRasterImports, streetSvgImports)
 
 export const galleryData = {
   products,

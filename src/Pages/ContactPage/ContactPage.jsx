@@ -2,6 +2,8 @@ import { motion, AnimatePresence } from "framer-motion"
 import PageTemplate from "../../Components/Layout/PageTemplate"
 import { useRef, useState } from "react"
 
+import heroImg from "../../assets/products/prod-13.jpg"
+
 const ContactPage = () => {
   const firstNameRef = useRef()
   const lastNameRef = useRef()
@@ -145,7 +147,7 @@ const ContactPage = () => {
     <PageTemplate
       title="Contact Us"
       description="Let's create something beautiful together"
-      heroImage="https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?q=80&w=2072&auto=format&fit=crop"
+      heroImage={heroImg}
     >
       {/* Success Message */}
       <AnimatePresence>
@@ -184,11 +186,11 @@ const ContactPage = () => {
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.5 }}
-              className="bg-gray-800/50 backdrop-blur-sm rounded-2xl p-8 h-fit"
+              className="rounded-xl border border-zinc-800 p-6 bg-transparent h-fit"
             >
               <h2 className="text-2xl font-bold text-white mb-6">Get in Touch</h2>
               
-              <div className="space-y-6 text-gray-300">
+              <div className="space-y-6 text-zinc-400">
                 <div>
                   <h3 className="text-white font-semibold mb-1">Phone</h3>
                   <p>03264002982</p>
@@ -219,14 +221,14 @@ const ContactPage = () => {
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.5 }}
-              className="bg-gray-800/50 backdrop-blur-sm rounded-2xl p-8"
+              className="rounded-xl border border-zinc-800 p-6 bg-transparent"
             >
               <h2 className="text-2xl font-bold text-white mb-6">Whatsapp Me</h2>
               
               <form ref={formRef} onSubmit={handleSubmit} className="space-y-6">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
-                    <label htmlFor="firstName" className="block text-sm font-medium text-gray-300 mb-1">
+                    <label htmlFor="firstName" className="block text-sm font-medium text-zinc-400 mb-1">
                       First Name *
                     </label>
                     <input
@@ -235,12 +237,12 @@ const ContactPage = () => {
                       name="firstName"
                       ref={firstNameRef}
                       required
-                      className="w-full px-4 py-2 rounded-lg bg-gray-700/50 border border-gray-600 text-white focus:outline-none focus:border-white transition-colors"
+                      className="w-full px-4 py-2 rounded-lg bg-transparent border border-zinc-800 text-zinc-100 placeholder-zinc-500 focus:outline-none focus:border-zinc-500 transition-colors"
                     />
                   </div>
                   
                   <div>
-                    <label htmlFor="lastName" className="block text-sm font-medium text-gray-300 mb-1">
+                    <label htmlFor="lastName" className="block text-sm font-medium text-zinc-400 mb-1">
                       Last Name *
                     </label>
                     <input
@@ -249,13 +251,13 @@ const ContactPage = () => {
                       name="lastName"
                       ref={lastNameRef}
                       required
-                      className="w-full px-4 py-2 rounded-lg bg-gray-700/50 border border-gray-600 text-white focus:outline-none focus:border-white transition-colors"
+                      className="w-full px-4 py-2 rounded-lg bg-transparent border border-zinc-800 text-zinc-100 placeholder-zinc-500 focus:outline-none focus:border-zinc-500 transition-colors"
                     />
                   </div>
                 </div>
 
                 <div>
-                  <label htmlFor="phone" className="block text-sm font-medium text-gray-300 mb-1">
+                  <label htmlFor="phone" className="block text-sm font-medium text-zinc-400 mb-1">
                     Phone Number *
                   </label>
                   <div className="flex flex-wrap md:flex-nowrap gap-2 w-full">
@@ -264,7 +266,7 @@ const ContactPage = () => {
                       name="countryCode"
                       ref={countryCodeRef}
                       required
-                      className="w-full md:w-auto md:min-w-[130px] px-3 py-2 rounded-lg bg-gray-700/50 border border-gray-600 text-white focus:outline-none focus:border-white transition-colors"
+                      className="w-full md:w-auto md:min-w-[130px] px-3 py-2 rounded-lg bg-transparent border border-zinc-800 text-zinc-100 focus:outline-none focus:border-zinc-500 transition-colors"
                       defaultValue="+92"
                     >
                       <option value="+92">+92 (Pakistan)</option>
@@ -282,14 +284,14 @@ const ContactPage = () => {
                       name="phone"
                       ref={phoneRef}
                     required
-                    className="w-full px-4 py-2 rounded-lg bg-gray-700/50 border border-gray-600 text-white focus:outline-none focus:border-white transition-colors"
+                    className="w-full px-4 py-2 rounded-lg bg-transparent border border-zinc-800 text-zinc-100 placeholder-zinc-500 focus:outline-none focus:border-zinc-500 transition-colors"
                       placeholder="Your phone number"
                   />
                   </div>
                 </div>
 
                 <div>
-                  <label htmlFor="subject" className="block text-sm font-medium text-gray-300 mb-1">
+                  <label htmlFor="subject" className="block text-sm font-medium text-zinc-400 mb-1">
                     Type of Photography *
                   </label>
                   <select
@@ -297,7 +299,7 @@ const ContactPage = () => {
                     name="subject"
                     ref={subjectRef}
                     required
-                    className="w-full px-4 py-2 rounded-lg bg-gray-700/100 border border-gray-600 text-white focus:outline-none focus:border-white transition-colors"
+                    className="w-full px-4 py-2 rounded-lg bg-transparent border border-zinc-800 text-zinc-100 focus:outline-none focus:border-zinc-500 transition-colors"
                   >
                     <option value="">Select a type</option>
                     <option value="wedding">Wedding Photography</option>
@@ -308,7 +310,7 @@ const ContactPage = () => {
                 </div>
 
                 <div>
-                  <label htmlFor="message" className="block text-sm font-medium text-gray-300 mb-1">
+                  <label htmlFor="message" className="block text-sm font-medium text-zinc-400 mb-1">
                     Message *
                   </label>
                   <div className="relative">
@@ -318,14 +320,14 @@ const ContactPage = () => {
                     ref={messageRef}
                     required
                     rows="4"
-                      className="w-full px-4 py-2 pr-12 rounded-lg bg-gray-700/50 border border-gray-600 text-white focus:outline-none focus:border-white transition-colors"
+                      className="w-full px-4 py-2 pr-12 rounded-lg bg-transparent border border-zinc-800 text-zinc-100 placeholder-zinc-500 focus:outline-none focus:border-zinc-500 transition-colors"
                       placeholder="Type your message or click the icon to enhance with AI"
                   ></textarea>
                     <button
                       type="button"
                       onClick={handleAiEnhanceMessage}
                       disabled={isAiLoading}
-                      className="absolute top-3 right-3 w-9 h-9 flex items-center justify-center bg-gray-700/60 hover:bg-gray-600/80 text-gray-300 hover:text-white rounded-full transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-sky-500"
+                      className="absolute top-3 right-3 w-9 h-9 flex items-center justify-center border border-zinc-800 bg-transparent hover:bg-zinc-900 text-zinc-400 hover:text-white rounded-full transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
                       aria-label="Enhance message with AI"
                       title="Enhance message with AI"
                     >

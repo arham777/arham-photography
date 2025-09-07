@@ -191,10 +191,35 @@ const HomePage = () => {
                       {Object.values(item.picture.sources).map((s) => (
                         <source key={s.type} srcSet={s.srcset} type={s.type} sizes="(min-width:1024px) 25vw, (min-width:640px) 33vw, 50vw" />
                       ))}
-                      <img src={item.picture.img.src} alt="Selected work" className="w-full h-full object-cover aspect-square md:aspect-[4/5] transition-transform duration-500 group-hover:scale-[1.03] will-change-transform" loading="lazy" decoding="async" />
+                      <img
+                        src={item.picture.img.src}
+                        alt="Selected work"
+                        className="w-full h-full object-cover aspect-square md:aspect-[4/5] transition-transform duration-500 group-hover:scale-[1.03] will-change-transform"
+                        loading="lazy"
+                        decoding="async"
+                        onError={(e) => {
+                          const fb = item.rawUrl || item.url
+                          if (fb && e.currentTarget.src !== fb) {
+                            e.currentTarget.srcset = ''
+                            e.currentTarget.src = fb
+                          }
+                        }}
+                      />
                     </picture>
                   ) : (
-                    <img src={item.url} alt="Selected work" className="w-full h-full object-cover aspect-square md:aspect-[4/5] transition-transform duration-500 group-hover:scale-[1.03] will-change-transform" loading="lazy" decoding="async" />
+                    <img
+                      src={item.url || item.rawUrl}
+                      alt="Selected work"
+                      className="w-full h-full object-cover aspect-square md:aspect-[4/5] transition-transform duration-500 group-hover:scale-[1.03] will-change-transform"
+                      loading="lazy"
+                      decoding="async"
+                      onError={(e) => {
+                        const fb = item.rawUrl || item.url
+                        if (fb && e.currentTarget.src !== fb) {
+                          e.currentTarget.src = fb
+                        }
+                      }}
+                    />
                   )}
                   <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-black/0 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
                 </motion.div>

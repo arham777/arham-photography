@@ -179,6 +179,13 @@ const Gallery = ({ images }) => {
                     src={photo.picture.img.src}
                     alt={photo.description ?? ""}
                     loading="lazy"
+                    onError={(e) => {
+                      const fb = photo.rawUrl || photo.url
+                      if (fb && e.currentTarget.src !== fb) {
+                        e.currentTarget.srcset = ''
+                        e.currentTarget.src = fb
+                      }
+                    }}
                     className="w-full h-auto object-cover transition-transform duration-500 group-hover:scale-[1.02] block"
                     style={{ 
                       display: 'block',
@@ -190,9 +197,15 @@ const Gallery = ({ images }) => {
                 </picture>
               ) : (
                 <img
-                  src={photo.url}
+                  src={photo.url || photo.rawUrl}
                   alt={photo.description ?? ""}
                   loading="lazy"
+                  onError={(e) => {
+                    const fb = photo.rawUrl || photo.url
+                    if (fb && e.currentTarget.src !== fb) {
+                      e.currentTarget.src = fb
+                    }
+                  }}
                   className="w-full h-auto object-cover transition-transform duration-500 group-hover:scale-[1.02] block"
                   style={{ 
                     display: 'block',
@@ -269,6 +282,13 @@ const Gallery = ({ images }) => {
                           src={img.picture.img.src}
                           srcSet={img.picture.img.srcset}
                           sizes="90vw"
+                          onError={(e) => {
+                            const fb = img.rawUrl || img.url
+                            if (fb && e.currentTarget.src !== fb) {
+                              e.currentTarget.srcset = ''
+                              e.currentTarget.src = fb
+                            }
+                          }}
                           alt={img.description ?? ""}
                           className="max-h-[85vh] object-contain rounded-lg shadow-2xl"
                           loading="eager"
@@ -294,10 +314,16 @@ const Gallery = ({ images }) => {
                       ) : (
                         <motion.img
                           ref={i === lightboxIndex ? (el) => { currentImageRef.current = el } : null}
-                          src={img.url}
+                          src={img.url || img.rawUrl}
                           alt={img.description ?? ""}
                           className="max-h-[85vh] object-contain rounded-lg shadow-2xl"
                           loading="eager"
+                          onError={(e) => {
+                            const fb = img.rawUrl || img.url
+                            if (fb && e.currentTarget.src !== fb) {
+                              e.currentTarget.src = fb
+                            }
+                          }}
                           style={{ x, y, scale: zoomScale, cursor: zoomScale > 1 ? "grab" : "zoom-in" }}
                           drag={zoomScale > 1}
                           dragConstraints={dragBounds}
