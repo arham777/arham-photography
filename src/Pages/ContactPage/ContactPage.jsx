@@ -2,7 +2,7 @@ import { motion, AnimatePresence } from "framer-motion"
 import PageTemplate from "../../Components/Layout/PageTemplate"
 import { useRef, useState } from "react"
 
-import heroImg from "../../assets/products/prod-13.jpg"
+import heroImg from "../../assets/products/prod-13-final.jpg"
 
 const ContactPage = () => {
   const firstNameRef = useRef()

@@ -1,7 +1,7 @@
 import PageTemplate from "../../Components/Layout/PageTemplate"
 import Gallery from "../../Components/Gallery/Gallery"
 import { galleryData } from "../../data/galleryData"
-import productHero from "../../assets/products/prod-4.png?as=picture&format=avif;webp;png&w=800;1200;1600&imagetools"
+import productHero from "../../assets/products/prod-4-final.jpg"
 
 const ProductsPage = () => {
   return (

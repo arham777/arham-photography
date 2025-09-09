@@ -2,10 +2,10 @@ import { motion } from "framer-motion"
 import { useRef } from "react"
 import { Link } from "react-router-dom"
 import PageTransition from "../../Components/Layout/PageTransition"
-import productHero from "../../assets/products/prod-4.png?as=picture&format=avif;webp;png&w=800;1200;1600&imagetools"
-import natureHero from "../../assets/nature/nat-12.jpg?as=picture&format=avif;webp;jpeg&w=800;1200;1600&imagetools"
-import streetHero from "../../assets/street/street-5.jpg?as=picture&format=avif;webp;jpeg&w=800;1200;1600&imagetools"
-import portraitHero from "../../assets/portraits/port-5.jpg?as=picture&format=avif;webp;jpeg&w=800;1200;1600&imagetools"
+import productHero from "../../assets/products/prod-4-final.jpg"
+import natureHero from "../../assets/nature/nat-12-final.jpg"
+import streetHero from "../../assets/street/street-5-final.jpg"
+import portraitHero from "../../assets/portraits/home-hero.jpg"
 import { galleryData } from "../../data/galleryData"
 
 const HomePage = () => {
@@ -18,12 +18,12 @@ const HomePage = () => {
   return (
     <PageTransition>
       {/* Hero Section */}
-      <section className="relative h-screen -mt-24 bg-neutral-950">
+      <section className="relative h-[calc(100svh+96px)] md:h-[calc(100vh+96px)] -mt-24 bg-neutral-950">
         <div className="absolute inset-0">
           <motion.div 
-            initial={{ scale: 1.05, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            transition={{ duration: 1.2 }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.8 }}
             className="w-full h-full"
           >
             {portraitHero?.sources && portraitHero?.img?.src ? (
@@ -34,7 +34,7 @@ const HomePage = () => {
                 <img
                   src={portraitHero.img.src}
                   alt="Professional photographer"
-                  className="w-full h-full object-cover will-change-transform"
+                  className="w-full h-full object-cover will-change-transform object-[84%_18%] sm:object-[100%_18%] md:object-[100%_20%] lg:object-[100%_20%]"
                   decoding="async"
                 />
               </picture>
@@ -42,12 +42,14 @@ const HomePage = () => {
               <img 
                 src={portraitHero}
                 alt="Professional photographer"
-                className="w-full h-full object-cover will-change-transform"
+                className="w-full h-full object-cover will-change-transform object-[84%_18%] sm:object-[100%_18%] md:object-[100%_20%] lg:object-[100%_20%]"
                 decoding="async"
               />
             )}
           </motion.div>
-          <div className="absolute inset-0 bg-gradient-to-b from-neutral-900/30 via-neutral-950/60 to-neutral-950/80" />
+          <div
+            className="absolute inset-0 bg-gradient-to-b from-neutral-900/30 via-neutral-950/60 to-neutral-950/80 pointer-events-none"
+          />
         </div>
         
         <div className="relative h-full flex items-center justify-center px-4 md:px-6">
@@ -55,30 +57,30 @@ const HomePage = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.5 }}
-            className="max-w-2xl text-center space-y-6"
+            className="max-w-2xl text-center space-y-3"
           >
-            <p className="text-sm uppercase tracking-[0.3em] text-neutral-300/90">
+            <p className="text-xs sm:text-sm uppercase tracking-[0.25em] sm:tracking-[0.3em] text-neutral-300/90">
               Minimal • Emotive • Timeless
             </p>
-            <h1 className="text-3xl md:text-6xl font-medium tracking-tight text-white">
+            <h1 className="text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-medium tracking-tight text-white leading-tight">
               Capturing Stories In Their Purest Form
             </h1>
-            <p className="text-lg text-neutral-200/90 font-light">
+            <p className="text-sm sm:text-base md:text-lg text-neutral-200/90 font-light">
               Contemporary photography with a refined, minimalist approach — crafted to make you feel.
             </p>
-            <div className="flex items-center justify-center gap-3 pt-2">
+            <div className="flex items-center justify-center gap-2.5 sm:gap-3 pt-1">
               <motion.button
                 onClick={scrollToCollections}
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
-                className="px-6 py-3 bg-white text-neutral-900 rounded-full text-base font-medium hover:bg-neutral-100 transition-colors"
+                className="px-4 py-2 sm:px-5 sm:py-2.5 bg-white text-neutral-900 rounded-full text-sm md:text-base font-medium hover:bg-neutral-100 transition-colors"
               >
                 View Portfolio
               </motion.button>
               <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
                 <Link
                   to="/contact"
-                  className="px-6 py-3 rounded-full border border-white/30 text-white hover:bg-white/10 transition-colors text-base font-medium"
+                  className="px-4 py-2 sm:px-5 sm:py-2.5 rounded-full border border-white/30 text-white hover:bg-white/10 transition-colors text-sm md:text-base font-medium"
                 >
                   Get in touch
                 </Link>
@@ -90,12 +92,12 @@ const HomePage = () => {
 
       {/* Stats / Trust Band */}
       <section className="bg-neutral-950">
-        <div className="px-4 max-w-5xl mx-auto -mt-10 md:-mt-14">
+        <div className="px-4 max-w-5xl mx-auto -mt-28 md:-mt-32 lg:-mt-36 relative z-10">
           <div className="grid grid-cols-3 divide-x divide-white/10 overflow-hidden rounded-2xl border border-white/10 bg-white/5 backdrop-blur-md">
             {stats.map((item) => (
-              <div key={item.label} className="px-4 md:px-8 py-6 text-center">
-                <div className="text-2xl md:text-3xl font-semibold text-white">{item.value}</div>
-                <div className="mt-1 text-xs md:text-sm text-neutral-300">{item.label}</div>
+              <div key={item.label} className="px-3 sm:px-4 md:px-8 py-4 sm:py-5 md:py-6 text-center">
+                <div className="text-base sm:text-xl md:text-2xl lg:text-3xl font-semibold text-white">{item.value}</div>
+                <div className="mt-1 text-[10px] sm:text-[11px] md:text-xs lg:text-sm text-neutral-300">{item.label}</div>
               </div>
             ))}
           </div>
